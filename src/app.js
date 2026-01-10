@@ -7,7 +7,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:5175",
+    origin: process.env.VITE_URL,
     credentials: true,
   })
 );

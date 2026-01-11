@@ -18,11 +18,5 @@ app.get("/", (req, res) => {
 });
 app.use("/auth", authRoutes);
 app.use("/post", postRoutes);
-app.get("/auth/me", (req, res) => {
-  if (!req.cookies.token) {
-    return res.status(401).json({ authenticated: false });
-  }
-  res.json({ authenticated: true });
-});
 
 module.exports = app;

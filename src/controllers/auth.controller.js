@@ -52,4 +52,10 @@ const logoutController = async (req, res) => {
   res.status(200).json({ message: "Logged out" });
 };
 
-module.exports = { registerController, loginController, logoutController };
+const profileController = async (req, res) => {
+  res.status(200).json({ 
+    authenticated: true,
+    username: req.user.username });
+
+};
+module.exports = { registerController, loginController, logoutController, profileController };

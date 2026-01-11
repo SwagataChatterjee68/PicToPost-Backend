@@ -68,7 +68,7 @@ const loginController = async (req, res) => {
 /* LOGOUT */
 const logoutController = async (req, res) => {
   try {
-    res.cookie("token", token, {
+    res.clearCookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",

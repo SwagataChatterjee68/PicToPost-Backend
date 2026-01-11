@@ -2,6 +2,8 @@ const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+const isProd = process.env.NODE_ENV === "production";
+
 /* REGISTER */
 const registerController = async (req, res) => {
   try {
@@ -22,8 +24,8 @@ const registerController = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
       path: "/",
     });
 
@@ -53,8 +55,8 @@ const loginController = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
       path: "/",
     });
 
@@ -68,10 +70,10 @@ const loginController = async (req, res) => {
 /* LOGOUT */
 const logoutController = async (req, res) => {
   try {
-    res.clearCookie("token", token, {
+    res.clearCookie("token", {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
       path: "/",
     });
 

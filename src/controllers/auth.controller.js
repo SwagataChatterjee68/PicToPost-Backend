@@ -53,11 +53,9 @@ const loginController = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: isProd,
-      sameSite: isProd ? "none" : "lax",
-      path: "/",
+    res.status(200).json({
+      token,
+      username: user.username,
     });
 
     return res.status(200).json({ username: user.username });

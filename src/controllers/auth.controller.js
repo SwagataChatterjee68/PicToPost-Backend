@@ -16,7 +16,12 @@ const registerController = async (req, res) => {
   });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("token", token);
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
 
   res.status(200).json({
     username: user.username,
@@ -41,21 +46,36 @@ const loginController = async (req, res) => {
   }
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("token", token);
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+
   res.status(200).json({
     username: user.username,
   });
 };
 
 const logoutController = async (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
   res.status(200).json({ message: "Logged out" });
 };
 
 const profileController = async (req, res) => {
-  res.status(200).json({ 
+  res.status(200).json({
     authenticated: true,
-    username: req.user.username });
-
+    username: req.user.username,
+  });
 };
-module.exports = { registerController, loginController, logoutController, profileController };
+module.exports = {
+  registerController,
+  loginController,
+  logoutController,
+  profileController,
+};

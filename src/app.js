@@ -7,7 +7,10 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: process.env.VITE_URL,
+    origin: [
+      "http://localhost:5173",
+      "https://pic-to-post-frontend.vercel.app",
+    ],
     credentials: true,
   })
 );

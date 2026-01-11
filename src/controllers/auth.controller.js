@@ -29,7 +29,7 @@ const loginController = async (req, res) => {
 
   if (!user) {
     return res.status(401).json({
-      message: "User Not Found",
+      message: "User is not registered",
     });
   }
 

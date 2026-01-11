@@ -15,12 +15,20 @@ const registerController = async (req, res) => {
     email,
   });
 
+  const isProd = process.env.NODE_ENV === "production";
+
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
   res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    httpOnly: true, // JS cannot access it
+    secure: isProd, // true on HTTPS (Render)
+    sameSite: isProd ? "none" : "lax",
+    path: "/", // important
+  });
+
+  res.status(200).json({
+    message: "Authenticated",
+    username: user.username,
   });
 
   res.status(200).json({
@@ -45,12 +53,20 @@ const loginController = async (req, res) => {
     });
   }
 
+  const isProd = process.env.NODE_ENV === "production";
+
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
   res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    httpOnly: true, // JS cannot access it
+    secure: isProd, // true on HTTPS (Render)
+    sameSite: isProd ? "none" : "lax",
+    path: "/", // important
+  });
+
+  res.status(200).json({
+    message: "Authenticated",
+    username: user.username,
   });
 
   res.status(200).json({
